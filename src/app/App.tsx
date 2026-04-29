@@ -45,12 +45,14 @@ export default function App() {
                   {selectedIngredients.length > 0 && (
                     <div className="flex flex-wrap gap-1">
                       {selectedIngredients.map((ingredient) => (
-                        <span
+                        <button
                           key={ingredient}
-                          className="px-2 py-0.5 text-xs rounded-full bg-primary text-primary-foreground"
+                          onClick={() => toggleIngredient(ingredient)}
+                          className="flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-primary text-primary-foreground hover:opacity-75 transition-opacity cursor-pointer"
                         >
                           {ingredient}
-                        </span>
+                          <span className="opacity-70">×</span>
+                        </button>
                       ))}
                     </div>
                   )}
@@ -99,9 +101,9 @@ export default function App() {
               <button
                 onClick={handleCast}
                 disabled={selectedIngredients.length === 0}
-                className="w-full px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full px-6 py-5 bg-primary text-primary-foreground rounded-xl text-lg font-semibold tracking-widest uppercase shadow-lg hover:opacity-90 hover:shadow-primary/40 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
               >
-                Cast
+                ✦ Cast ✦
               </button>
             </div>
 
