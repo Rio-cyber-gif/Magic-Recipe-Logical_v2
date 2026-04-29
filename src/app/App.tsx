@@ -22,6 +22,19 @@ export default function App() {
 
   const cardRef = useRef<HTMLDivElement>(null);
   const [openModal, setOpenModal] = useState<ModalType>(null);
+  const [showScrollTop, setShowScrollTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Cast 後にカード先頭へスクロール
   useEffect(() => {
@@ -36,7 +49,7 @@ export default function App() {
         {!showRecipe ? (
           <div className="space-y-8">
             <header className="text-center">
-              <img src="/mrl.png" alt="Magic Recipe: Logical" className="w-full h-auto object-contain" />
+              <img src="/mrl.png" alt="Magic Recipe: Logical" className="w-full h-auto object-contain header-image" />
             </header>
 
             <div className="space-y-6">
@@ -229,6 +242,19 @@ export default function App() {
       {/* 法的モーダル */}
       {openModal && (
         <LegalModal type={openModal} onClose={() => setOpenModal(null)} />
+      )}
+
+      {/* トップへ戻るボタン */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 p-4 rounded-full bg-primary text-primary-foreground shadow-lg hover:opacity-90 transition-all z-50 cursor-pointer border border-white/20"
+          aria-label="ページトップへ戻る"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+          </svg>
+        </button>
       )}
     </div>
   );
