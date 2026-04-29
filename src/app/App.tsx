@@ -49,7 +49,7 @@ export default function App() {
         {!showRecipe ? (
           <div className="space-y-8">
             <header className="text-center">
-              <img src="/mrl.png" alt="Magic Recipe: Logical" className="w-full h-auto object-contain header-image" />
+              <img src="/mrl.png" alt="Magic Recipe Logical" className="w-full h-auto object-contain header-image" />
             </header>
 
             <div className="space-y-6">
@@ -163,7 +163,7 @@ export default function App() {
                   プライバシーポリシー
                 </button>
               </p>
-              <p>© 2026 Magic Recipe: Logical</p>
+              <p>© 2026 Magic Recipe Logical</p>
             </footer>
           </div>
         ) : (
@@ -234,7 +234,7 @@ export default function App() {
                   プライバシーポリシー
                 </button>
               </p>
-              <p>© 2026 Magic Recipe: Logical</p>
+              <p>© 2026 Magic Recipe Logical</p>
             </footer>
           </div>
         )}

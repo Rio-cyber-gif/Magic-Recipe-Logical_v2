@@ -1,4 +1,4 @@
-# Magic Recipe: Logical ✦
+# Magic Recipe Logical ✦
 
 > 日常の食材を、エンジニアリングの視点と少しの魔法で「論理的に錬成」する不思議な献立帖。
 
@@ -94,4 +94,4 @@ src/
 
 ## ライセンス
 
-© 2026 Magic Recipe: Logical
+© 2026 Magic Recipe Logical

@@ -33,7 +33,7 @@ export function useRecipe() {
 
   const handleShare = (recipeName: string) => {
     const ingredients = selectedIngredients.join('・');
-    const text = `Magic Recipe: Logical で錬成しました ✦\n「${recipeName}」\n\n使用食材：${ingredients}\n\n#MagicRecipeLogical`;
+    const text = `Magic Recipe Logical で錬成しました ✦\n「${recipeName}」\n\n使用食材：${ingredients}\n\n#MagicRecipeLogical`;
     const url = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   };
