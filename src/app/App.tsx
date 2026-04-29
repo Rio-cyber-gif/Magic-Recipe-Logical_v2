@@ -19,6 +19,17 @@ const INGREDIENTS = [
   '豆乳', 'ごぼう', 'さつまいも', '春雨', '厚揚げ', 'れんこん', 'ズッキーニ', 'パクチー'
 ];
 
+const INGREDIENT_CATEGORIES: Record<string, string[]> = {
+  'すべて': [],
+  '野菜': ['にんにく', '玉ねぎ', 'トマト', 'じゃがいも', 'にんじん', 'キャベツ', 'ほうれん草', 'なす', 'ピーマン', 'ブロッコリー', 'ネギ', 'きのこ', 'アボカド', 'わかめ', '昆布', 'ごぼう', 'さつまいも', 'れんこん', 'ズッキーニ'],
+  '魚介': ['ツナ缶', 'まぐろ', 'えび', 'いか', 'あさり', 'さけ', 'たこ', 'ほたて', 'しらす', 'かつお節'],
+  'フルーツ': ['いちご', 'レモン', 'りんご', 'バナナ', 'もも', 'みかん', 'ぶどう', 'すいか', 'マンゴー'],
+  '肉・乳': ['卵', '牛乳', '生クリーム', 'バター', 'チーズ', 'ベーコン', '鶏肉', '豚肉', '牛肉', 'ヨーグルト'],
+  '穀物・豆': ['小麦粉', '米', 'パスタ', 'パン', '納豆', '豆腐', '豆乳', '厚揚げ', '春雨'],
+  '調味料': ['醤油', '砂糖', '塩', 'コショウ', '味噌', 'みりん', '酒', '酢', 'ごま油', 'オリーブオイル', '唐辛子', '生姜', 'マヨネーズ', 'ケチャップ', 'ソース', 'ワイン'],
+  'スパイス': ['バニラ', 'シナモン', 'カレー粉', 'パプリカ', 'クミン', 'バジル', 'ローズマリー', 'ミント', 'パクチー', 'チョコレート', 'はちみつ'],
+};
+
 const INGREDIENT_ALIASES: Record<string, string> = {
   'いちご': 'ストロベリー・ノード', '生クリーム': '乳脂肪エマルション', '醤油': 'アミノ酸ソリューション', 
   'バター': 'ソリッド・ファット', '砂糖': 'スクロース結晶体', '卵': 'オーバル・プロテイン', 
@@ -278,6 +289,11 @@ export default function App() {
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [showRecipe, setShowRecipe] = useState(false);
+  const [activeCategory, setActiveCategory] = useState<string>('すべて');
+
+  const filteredIngredients = activeCategory === 'すべて'
+    ? INGREDIENTS
+    : INGREDIENTS.filter(i => INGREDIENT_CATEGORIES[activeCategory]?.includes(i));
 
   const toggleIngredient = (ingredient: string) => {
     if (selectedIngredients.includes(ingredient)) {
@@ -306,6 +322,7 @@ export default function App() {
     setShowRecipe(false);
     setSelectedIngredients([]);
     setRecipe(null);
+    setActiveCategory('すべて');
   };
 
   return (
@@ -328,17 +345,46 @@ export default function App() {
                 <label className="block mb-3 text-foreground">
                   材料を選択（3つまで）
                 </label>
-                <p className="mb-4 text-sm text-muted-foreground">
-                  選択中: {selectedIngredients.length}/3
-                </p>
+                <div className="flex items-center gap-2 mb-4 min-h-[2rem]">
+                  <span className="text-sm text-muted-foreground shrink-0">
+                    選択中: {selectedIngredients.length}/3
+                  </span>
+                  {selectedIngredients.length > 0 && (
+                    <div className="flex flex-wrap gap-1">
+                      {selectedIngredients.map((ingredient) => (
+                        <span
+                          key={ingredient}
+                          className="px-2 py-0.5 text-xs rounded-full bg-primary text-primary-foreground"
+                        >
+                          {ingredient}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {Object.keys(INGREDIENT_CATEGORIES).map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => setActiveCategory(category)}
+                      className={`px-3 py-1 text-xs rounded-full border transition-colors
+                        ${activeCategory === category
+                          ? 'bg-primary text-primary-foreground border-primary'
+                          : 'bg-white/60 text-foreground border-white/40 hover:bg-white/80'
+                        }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
                 <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-80 overflow-y-auto p-1">
-                  {INGREDIENTS.map((ingredient) => {
+                  {filteredIngredients.map((ingredient) => {
                     const isSelected = selectedIngredients.includes(ingredient);
                     const isDisabled = !isSelected && selectedIngredients.length >= 3;
 
                     return (
                       <button
-                        key={ingredient}
+                        key={`${activeCategory}-${ingredient}`}
                         onClick={() => toggleIngredient(ingredient)}
                         disabled={isDisabled}
                         className={`
