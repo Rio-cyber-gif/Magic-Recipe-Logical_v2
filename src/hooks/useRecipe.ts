@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { INGREDIENTS, INGREDIENT_CATEGORIES } from '../data/ingredients';
 import { generateRecipe, type Recipe } from '../logic/generateRecipe';
 
 export function useRecipe() {
@@ -7,12 +8,20 @@ export function useRecipe() {
   const [showRecipe, setShowRecipe] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>('すべて');
 
+  const filteredIngredients = activeCategory === 'すべて'
+    ? INGREDIENTS
+    : INGREDIENTS.filter(i => INGREDIENT_CATEGORIES[activeCategory]?.includes(i));
+
   const toggleIngredient = (ingredient: string) => {
     if (selectedIngredients.includes(ingredient)) {
       setSelectedIngredients(selectedIngredients.filter(i => i !== ingredient));
     } else if (selectedIngredients.length < 3) {
       setSelectedIngredients([...selectedIngredients, ingredient]);
     }
+  };
+
+  const clearIngredients = () => {
+    setSelectedIngredients([]);
   };
 
   const handleCast = () => {
@@ -29,10 +38,6 @@ export function useRecipe() {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  const clearIngredients = () => {
-    setSelectedIngredients([]);
-  };
-
   const handleReset = () => {
     setShowRecipe(false);
     setSelectedIngredients([]);
@@ -45,6 +50,7 @@ export function useRecipe() {
     recipe,
     showRecipe,
     activeCategory,
+    filteredIngredients,
     setActiveCategory,
     toggleIngredient,
     clearIngredients,
