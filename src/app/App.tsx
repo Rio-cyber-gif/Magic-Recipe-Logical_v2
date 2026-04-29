@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { INGREDIENTS, INGREDIENT_CATEGORIES } from '../data/ingredients';
 import { useRecipe } from '../hooks/useRecipe';
 
@@ -9,10 +10,20 @@ export default function App() {
     activeCategory,
     setActiveCategory,
     toggleIngredient,
+    clearIngredients,
     handleCast,
     handleShare,
     handleReset,
   } = useRecipe();
+
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  // Cast 後にカード先頭へスクロール
+  useEffect(() => {
+    if (showRecipe) {
+      cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [showRecipe]);
 
   const filteredIngredients = activeCategory === 'すべて'
     ? INGREDIENTS
@@ -20,7 +31,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
-      <div className="w-full max-w-2xl bg-white/20 backdrop-blur-2xl border border-white/30 border-l-4 border-l-white/80 rounded-3xl p-8 shadow-2xl">
+      <div ref={cardRef} className="w-full max-w-2xl bg-white/20 backdrop-blur-2xl border border-white/30 border-l-4 border-l-white/80 rounded-3xl p-8 shadow-2xl">
         {!showRecipe ? (
           <div className="space-y-8">
             <header className="text-center space-y-3">
@@ -38,25 +49,37 @@ export default function App() {
                 <label className="block mb-3 text-foreground">
                   材料を選択（3つまで）
                 </label>
+
+                {/* 選択済みバッジ + 全解除ボタン */}
                 <div className="flex items-center gap-2 mb-4 min-h-[2rem]">
                   <span className="text-sm text-muted-foreground shrink-0">
                     選択中: {selectedIngredients.length}/3
                   </span>
                   {selectedIngredients.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
-                      {selectedIngredients.map((ingredient) => (
-                        <button
-                          key={ingredient}
-                          onClick={() => toggleIngredient(ingredient)}
-                          className="flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-primary text-primary-foreground hover:opacity-75 transition-opacity cursor-pointer"
-                        >
-                          {ingredient}
-                          <span className="opacity-70">×</span>
-                        </button>
-                      ))}
-                    </div>
+                    <>
+                      <div className="flex flex-wrap gap-1">
+                        {selectedIngredients.map((ingredient) => (
+                          <button
+                            key={ingredient}
+                            onClick={() => toggleIngredient(ingredient)}
+                            className="flex items-center gap-1 px-2 py-0.5 text-xs rounded-full bg-primary text-primary-foreground hover:opacity-75 transition-opacity cursor-pointer"
+                          >
+                            {ingredient}
+                            <span className="opacity-70">×</span>
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        onClick={clearIngredients}
+                        className="ml-auto shrink-0 text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+                      >
+                        全解除
+                      </button>
+                    </>
                   )}
                 </div>
+
+                {/* カテゴリタブ */}
                 <div className="flex flex-wrap gap-1 mb-3">
                   {Object.keys(INGREDIENT_CATEGORIES).map((category) => (
                     <button
@@ -72,29 +95,35 @@ export default function App() {
                     </button>
                   ))}
                 </div>
-                <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-80 overflow-y-auto p-1">
-                  {filteredIngredients.map((ingredient) => {
-                    const isSelected = selectedIngredients.includes(ingredient);
-                    const isDisabled = !isSelected && selectedIngredients.length >= 3;
 
-                    return (
-                      <button
-                        key={`${activeCategory}-${ingredient}`}
-                        onClick={() => toggleIngredient(ingredient)}
-                        disabled={isDisabled}
-                        className={`
-                          px-3 py-2 text-sm rounded-md border transition-colors
-                          ${isSelected
-                            ? 'bg-primary text-primary-foreground border-primary'
-                            : 'bg-white/60 text-foreground border-white/40 hover:bg-white/80'
-                          }
-                          ${isDisabled ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}
-                        `}
-                      >
-                        {ingredient}
-                      </button>
-                    );
-                  })}
+                {/* 食材グリッド（下端フェードあり） */}
+                <div className="relative">
+                  <div className="grid grid-cols-4 sm:grid-cols-6 gap-2 max-h-80 overflow-y-auto p-1">
+                    {filteredIngredients.map((ingredient) => {
+                      const isSelected = selectedIngredients.includes(ingredient);
+                      const isDisabled = !isSelected && selectedIngredients.length >= 3;
+
+                      return (
+                        <button
+                          key={`${activeCategory}-${ingredient}`}
+                          onClick={() => toggleIngredient(ingredient)}
+                          disabled={isDisabled}
+                          className={`
+                            px-3 py-2 text-sm rounded-md border transition-colors
+                            ${isSelected
+                              ? 'bg-primary text-primary-foreground border-primary'
+                              : 'bg-white/60 text-foreground border-white/40 hover:bg-white/80'
+                            }
+                            ${isDisabled ? 'opacity-30 cursor-not-allowed' : 'cursor-pointer'}
+                          `}
+                        >
+                          {ingredient}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  {/* スクロール可能を示すフェード */}
+                  <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white/20 to-transparent rounded-b-md" />
                 </div>
               </div>
 
