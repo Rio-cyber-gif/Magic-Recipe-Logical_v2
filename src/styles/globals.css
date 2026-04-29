@@ -3,3 +3,9 @@ body {
   background-attachment: fixed;
   min-height: 100vh;
 }
+
+
+img.header-image {
+  /* 画像全体のコントラストをわずかに抑えて、目に優しく馴染ませる */
+  filter: contrast(0.9) brightness(1.05);
+}
