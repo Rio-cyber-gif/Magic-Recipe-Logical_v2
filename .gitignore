@@ -1,0 +1,33 @@
+# 依存パッケージ
+node_modules/
+
+# ビルド成果物
+dist/
+dist-ssr/
+
+# Vite キャッシュ
+.vite/
+
+# 環境変数（機密情報を含む可能性があるため除外）
+.env
+.env.local
+.env.*.local
+
+# Claude Code
+.claude/
+
+# エディタ・OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# ログ
+*.log
+npm-debug.log*
+
+# TypeScript ビルドキャッシュ
+*.tsbuildinfo
+
+# デザインリファレンス（開発参照用、コミット対象外）
+src/components/src/
