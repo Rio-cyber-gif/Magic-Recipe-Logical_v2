@@ -94,4 +94,4 @@ src/
 
 ## ライセンス
 
-© 2026 Magic Recipe: Logical — 改変・商用利用・再配布を禁じます。
+© 2026 Magic Recipe: Logical

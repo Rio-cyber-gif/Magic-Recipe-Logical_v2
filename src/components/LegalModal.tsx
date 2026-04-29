@@ -66,7 +66,7 @@ function TermsContent() {
       <section className="space-y-2">
         <h3 className="text-sm font-semibold text-foreground">第4条　知的財産権</h3>
         <p className="text-sm text-foreground/80 leading-relaxed">
-          本サービスに関する著作権その他の知的財産権は開発者に帰属します。改変・商用利用・再配布を禁じます。
+          本サービスに関する著作権その他の知的財産権は開発者に帰属します。
         </p>
       </section>
 
