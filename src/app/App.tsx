@@ -35,14 +35,8 @@ export default function App() {
       <div ref={cardRef} className="w-full max-w-2xl bg-white/20 backdrop-blur-2xl border border-white/30 border-l-4 border-l-white/80 rounded-3xl p-8 shadow-2xl">
         {!showRecipe ? (
           <div className="space-y-8">
-            <header className="text-center space-y-3">
-              <h1 className="tracking-tight text-foreground">Magic Recipe: Logical</h1>
-              <p className="text-muted-foreground leading-relaxed">
-                マジックレシピ・ロジカル
-              </p>
-              <p className="text-sm text-muted-foreground leading-relaxed break-keep">
-                日常の食材を、エンジニアリングの視点と少しの魔法で<br />「論理的に錬成」する不思議な献立帖です。
-              </p>
+            <header className="text-center">
+              <img src="/mrl.png" alt="Magic Recipe: Logical" className="w-full h-auto object-contain" />
             </header>
 
             <div className="space-y-6">
