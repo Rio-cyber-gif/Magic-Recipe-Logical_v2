@@ -262,17 +262,10 @@ export default function App() {
   };
 
   const handleShare = () => {
-    const text = `Magic Recipe: Logical で錬成しました 🧪\n\nhttps://figma.com/make`;
-    if (navigator.share) {
-      navigator.share({ text }).catch((err) => console.error('Share failed:', err));
-    } else {
-      navigator.clipboard.writeText(text)
-        .then(() => alert('クリップボードにコピーしました'))
-        .catch((err) => {
-          console.error('Clipboard copy failed:', err);
-          alert('クリップボードへのコピーに失敗しました');
-        });
-    }
+    const ingredients = selectedIngredients.join('・');
+    const text = `Magic Recipe: Logical で錬成しました ✦\n「${recipe?.name}」\n\n使用食材：${ingredients}\n\n#MagicRecipeLogical`;
+    const url = `https://x.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   const handleReset = () => {
@@ -385,7 +378,7 @@ export default function App() {
                 onClick={handleShare}
                 className="flex-1 px-6 py-3 bg-secondary text-secondary-foreground rounded-lg hover:opacity-90 transition-opacity"
               >
-                Share
+                X でシェア
               </button>
               <button
                 onClick={handleReset}
