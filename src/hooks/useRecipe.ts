@@ -29,6 +29,10 @@ export function useRecipe() {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  const clearIngredients = () => {
+    setSelectedIngredients([]);
+  };
+
   const handleReset = () => {
     setShowRecipe(false);
     setSelectedIngredients([]);
@@ -43,6 +47,7 @@ export function useRecipe() {
     activeCategory,
     setActiveCategory,
     toggleIngredient,
+    clearIngredients,
     handleCast,
     handleShare,
     handleReset,
