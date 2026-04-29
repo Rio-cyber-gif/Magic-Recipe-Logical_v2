@@ -40,7 +40,7 @@ function TermsContent() {
       <section className="space-y-2">
         <h3 className="text-sm font-semibold text-foreground">第1条　目的</h3>
         <p className="text-sm text-foreground/80 leading-relaxed">
-          本アプリ「Magic Recipe: Logical」（以下「本サービス」）は、入力された食材をもとにエンジニアリングのメタファーで構成された架空のレシピを生成するエンターテインメントサービスです。生成されるレシピは実際の調理を目的とするものではありません。
+          本アプリ「Magic Recipe Logical」（以下「本サービス」）は、入力された食材をもとにエンジニアリングのメタファーで構成された架空のレシピを生成するエンターテインメントサービスです。生成されるレシピは実際の調理を目的とするものではありません。
         </p>
       </section>
 
