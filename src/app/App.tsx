@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { INGREDIENTS, INGREDIENT_CATEGORIES } from '../data/ingredients';
+import { INGREDIENT_CATEGORIES } from '../data/ingredients';
 import { useRecipe } from '../hooks/useRecipe';
 
 export default function App() {
@@ -8,6 +8,7 @@ export default function App() {
     recipe,
     showRecipe,
     activeCategory,
+    filteredIngredients,
     setActiveCategory,
     toggleIngredient,
     clearIngredients,
@@ -24,10 +25,6 @@ export default function App() {
       cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }, [showRecipe]);
-
-  const filteredIngredients = activeCategory === 'すべて'
-    ? INGREDIENTS
-    : INGREDIENTS.filter(i => INGREDIENT_CATEGORIES[activeCategory]?.includes(i));
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
