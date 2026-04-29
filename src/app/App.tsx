@@ -106,7 +106,7 @@ const TOOLS = [
   '鍋型リアクター', 'まな板型メモリ領域', '包丁型セグメンター', 'ザル型フィルタ', '計量カップ型メーター',
   'タイマー型クロック', '温度計型センサー', 'レンジ型エミッター', 'オーブン型コンパイラ',
   '冷蔵庫型ストレージ', '冷凍庫型アーカイブ', '蒸し器型バッファ', '圧力鍋型コンプレッサー',
-  'ミル型パーサー', 'ブレンダー型マージャー', 'スライサー型スプリッター', 'ピーラー型ストリッパー',
+  'ミル型パーサー', 'ブレンダー型マージャー', 'スライサー型スプリッター', 'ピーラー型エクストラクター',
   'おろし金型デグレーダー', 'フードプロセッサー型トランスフォーマー', '炊飯器型オートメーション',
   'ケトル型ボイラー', 'トースター型サーマルユニット', 'グリル型レンダラー', 'スケール型アナライザー',
   'スプーン型スクーパー', 'フォーク型ピッカー', 'トング型グリッパー', '泡立て器型エアレーター',
@@ -131,6 +131,13 @@ const VERIFICATIONS = [
   'スタックトレースに警告がないことを確認', 'コンソールに例外が出力されないことを検証',
   'パフォーマンスメトリクスが閾値を超えないことを確認', 'スループットが低下していないか観測',
   'レイテンシが増加傾向にないか確認', 'キャッシュヒット率が維持されているか検証'
+];
+
+const SERVE_MESSAGES = [
+  '食卓という本番環境にて、感覚器官APIへリクエストを送信してください。',
+  '食卓へのサーブ後、五感によるレビューをお願いします。',
+  'エンドユーザーとして、召し上がって動作確認をお願いします。',
+  '食卓への最終デプロイ後、味覚センサーによる検証を実施してください。',
 ];
 
 const FINALIZATIONS = [
@@ -193,7 +200,7 @@ function generateRecipe(ingredients: string[]): Recipe | null {
 
   const finalSteps: string[] = [];
   finalSteps.push(pick(FINALIZATIONS, 300));
-  finalSteps.push('食卓という本番環境にて、ユーザー（あなた）の感覚器官APIへリクエストを送信してください。');
+  finalSteps.push(pick(SERVE_MESSAGES, 301));
 
   const steps = [
     { phase: '01 — Initialization', steps: initSteps },
@@ -284,8 +291,8 @@ export default function App() {
               <p className="text-muted-foreground leading-relaxed">
                 マジックレシピ・ロジカル
               </p>
-              <p className="text-sm text-muted-foreground max-w-md mx-auto leading-relaxed">
-                日常の食材を、エンジニアリングの視点と少しの魔法で「論理的に錬成」する不思議な献立帖です。
+              <p className="text-sm text-muted-foreground leading-relaxed break-keep">
+                日常の食材を、エンジニアリングの視点と少しの魔法で<br />「論理的に錬成」する不思議な献立帖です。
               </p>
             </header>
 
@@ -346,7 +353,7 @@ export default function App() {
                 <p className="text-sm text-muted-foreground tracking-wider uppercase">
                   Build Successful
                 </p>
-                <h1 className="text-foreground leading-tight px-4">
+                <h1 className="text-foreground text-xl leading-snug px-4 break-keep">
                   {recipe?.name}
                 </h1>
               </div>
