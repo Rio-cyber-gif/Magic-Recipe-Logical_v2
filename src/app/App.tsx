@@ -1,6 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { INGREDIENT_CATEGORIES } from '../data/ingredients';
 import { useRecipe } from '../hooks/useRecipe';
+import { LegalModal } from '../components/LegalModal';
+
+type ModalType = 'terms' | 'privacy' | null;
 
 export default function App() {
   const {
@@ -18,6 +21,7 @@ export default function App() {
   } = useRecipe();
 
   const cardRef = useRef<HTMLDivElement>(null);
+  const [openModal, setOpenModal] = useState<ModalType>(null);
 
   // Cast 後にカード先頭へスクロール
   useEffect(() => {
@@ -133,10 +137,25 @@ export default function App() {
               </button>
             </div>
 
-            <footer className="text-center text-xs text-muted-foreground space-y-1">
+            <footer className="text-center text-xs text-muted-foreground space-y-2">
               <p>Zero API Cost · Minimalist UI · Clean Experience</p>
               <p className="opacity-75">
                 本アプリは空腹を物理的に満たすものではなく、精神的な充足を目的としています。
+              </p>
+              <p className="flex items-center justify-center gap-3 pt-1">
+                <button
+                  onClick={() => setOpenModal('terms')}
+                  className="text-xs underline underline-offset-2 hover:opacity-70 transition-opacity cursor-pointer"
+                >
+                  利用規約
+                </button>
+                <span className="opacity-40">·</span>
+                <button
+                  onClick={() => setOpenModal('privacy')}
+                  className="text-xs underline underline-offset-2 hover:opacity-70 transition-opacity cursor-pointer"
+                >
+                  プライバシーポリシー
+                </button>
               </p>
             </footer>
           </div>
@@ -189,14 +208,34 @@ export default function App() {
               </button>
             </div>
 
-            <footer className="text-center text-xs text-muted-foreground pt-4">
+            <footer className="text-center text-xs text-muted-foreground pt-4 space-y-2">
               <p>
                 生成されるレシピは型安全ですが、実際の味の再現性については「未定義」とさせていただきます。
+              </p>
+              <p className="flex items-center justify-center gap-3">
+                <button
+                  onClick={() => setOpenModal('terms')}
+                  className="text-xs underline underline-offset-2 hover:opacity-70 transition-opacity cursor-pointer"
+                >
+                  利用規約
+                </button>
+                <span className="opacity-40">·</span>
+                <button
+                  onClick={() => setOpenModal('privacy')}
+                  className="text-xs underline underline-offset-2 hover:opacity-70 transition-opacity cursor-pointer"
+                >
+                  プライバシーポリシー
+                </button>
               </p>
             </footer>
           </div>
         )}
       </div>
+
+      {/* 法的モーダル */}
+      {openModal && (
+        <LegalModal type={openModal} onClose={() => setOpenModal(null)} />
+      )}
     </div>
   );
 }
