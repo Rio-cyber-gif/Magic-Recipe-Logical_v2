@@ -145,7 +145,6 @@ export default function App() {
             </div>
 
             <footer className="text-center text-xs text-muted-foreground space-y-2">
-              <p>Zero API Cost · Minimalist UI · Clean Experience</p>
               <p className="opacity-75">
                 本アプリは空腹を物理的に満たすものではなく、精神的な充足を目的としています。
               </p>
@@ -164,6 +163,7 @@ export default function App() {
                   プライバシーポリシー
                 </button>
               </p>
+              <p>© 2026 Magic Recipe: Logical</p>
             </footer>
           </div>
         ) : (
@@ -234,6 +234,7 @@ export default function App() {
                   プライバシーポリシー
                 </button>
               </p>
+              <p>© 2026 Magic Recipe: Logical</p>
             </footer>
           </div>
         )}
