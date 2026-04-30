@@ -3,6 +3,7 @@ import {
   INIT_VERBS,
   RECIPE_PREFIXES,
   RECIPE_SUFFIXES,
+  COMPUTE_CONNECTORS,
   COMPUTE_ENDINGS,
   ACTIONS,
   METHODS,
@@ -63,12 +64,13 @@ export function generateRecipe(ingredients: string[]): Recipe | null {
   const computeSteps: string[] = [];
   const numCompute = 3 + Math.floor(random(99) * 2); // 3 or 4 steps
   for (let i = 0; i < numCompute; i++) {
-    const action = pick(ACTIONS, 100 + i * 5);
-    const state = pick(STATES, 100 + i * 5 + 1);
-    const metric = pick(METRICS, 100 + i * 5 + 2);
-    const condition = pick(CONDITIONS, 100 + i * 5 + 3);
-    const ending = pick(COMPUTE_ENDINGS, 100 + i * 5 + 4);
-    computeSteps.push(`${condition}で${action}を実行し、${state}まで${metric}で${ending}`);
+    const action = pick(ACTIONS, 100 + i * 6);
+    const state = pick(STATES, 100 + i * 6 + 1);
+    const metric = pick(METRICS, 100 + i * 6 + 2);
+    const condition = pick(CONDITIONS, 100 + i * 6 + 3);
+    const connector = pick(COMPUTE_CONNECTORS, 100 + i * 6 + 4);
+    const ending = pick(COMPUTE_ENDINGS, 100 + i * 6 + 5);
+    computeSteps.push(`${condition}で${action}${connector}、${state}まで${metric}で${ending}`);
   }
 
   const numVerify = Math.min(Math.floor(ingredients.length / 2) + 1, 3);
