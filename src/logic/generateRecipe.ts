@@ -2,6 +2,7 @@ import { INGREDIENT_ALIASES } from '../data/ingredients';
 import {
   RECIPE_PREFIXES,
   RECIPE_SUFFIXES,
+  COMPUTE_ENDINGS,
   ACTIONS,
   METHODS,
   STATES,
@@ -48,11 +49,12 @@ export function generateRecipe(ingredients: string[]): Recipe | null {
   const computeSteps: string[] = [];
   const numCompute = Math.min(ingredients.length + 1, 4);
   for (let i = 0; i < numCompute; i++) {
-    const action = pick(ACTIONS, 100 + i * 4);
-    const state = pick(STATES, 100 + i * 4 + 1);
-    const metric = pick(METRICS, 100 + i * 4 + 2);
-    const condition = pick(CONDITIONS, 100 + i * 4 + 3);
-    computeSteps.push(`${condition}で${action}を実行し、${state}まで${metric}で加熱/冷却する。`);
+    const action = pick(ACTIONS, 100 + i * 5);
+    const state = pick(STATES, 100 + i * 5 + 1);
+    const metric = pick(METRICS, 100 + i * 5 + 2);
+    const condition = pick(CONDITIONS, 100 + i * 5 + 3);
+    const ending = pick(COMPUTE_ENDINGS, 100 + i * 5 + 4);
+    computeSteps.push(`${condition}で${action}を実行し、${state}まで${metric}で${ending}`);
   }
 
   const verifySteps: string[] = [];
