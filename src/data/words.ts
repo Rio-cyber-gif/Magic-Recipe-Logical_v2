@@ -24,6 +24,12 @@ export const RECIPE_SUFFIXES = [
   'ゲートウェイ', 'プロキシ層', 'ファサード', 'アダプタ', 'ブリッジ構造'
 ] as const;
 
+export const COMPUTE_CONNECTORS = [
+  'を実行し', 'を適用し', 'を呼び出し', 'をディスパッチし',
+  'を起動し', 'を展開し', 'を処理し', 'を実施し',
+  'をトリガーし', 'をインボークし', 'をスケジュールし', 'をキューイングし',
+] as const;
+
 export const COMPUTE_ENDINGS = [
   '加熱/冷却する。',
   '最適化する。',

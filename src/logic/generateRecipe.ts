@@ -3,6 +3,7 @@ import {
   INIT_VERBS,
   RECIPE_PREFIXES,
   RECIPE_SUFFIXES,
+  COMPUTE_CONNECTORS,
   COMPUTE_ENDINGS,
   ACTIONS,
   METHODS,
@@ -39,6 +40,18 @@ export function generateRecipe(ingredients: string[]): Recipe | null {
     return arr[Math.floor(random(index) * arr.length)];
   };
 
+  // 重複なしで複数選択する（v1のpickUniqueに相当）
+  const pickUnique = <T,>(arr: readonly T[], count: number, startIndex: number): T[] => {
+    const pool = [...arr];
+    const result: T[] = [];
+    for (let i = 0; i < count && pool.length > 0; i++) {
+      const idx = Math.floor(random(startIndex + i) * pool.length);
+      result.push(pool[idx]);
+      pool.splice(idx, 1);
+    }
+    return result;
+  };
+
   const initSteps: string[] = [];
   ingredients.forEach((ing, i) => {
     const action = pick(ACTIONS, i * 4);
@@ -49,21 +62,19 @@ export function generateRecipe(ingredients: string[]): Recipe | null {
   });
 
   const computeSteps: string[] = [];
-  const numCompute = Math.min(ingredients.length + 1, 4);
+  const numCompute = 3 + Math.floor(random(99) * 2); // 3 or 4 steps
   for (let i = 0; i < numCompute; i++) {
-    const action = pick(ACTIONS, 100 + i * 5);
-    const state = pick(STATES, 100 + i * 5 + 1);
-    const metric = pick(METRICS, 100 + i * 5 + 2);
-    const condition = pick(CONDITIONS, 100 + i * 5 + 3);
-    const ending = pick(COMPUTE_ENDINGS, 100 + i * 5 + 4);
-    computeSteps.push(`${condition}で${action}を実行し、${state}まで${metric}で${ending}`);
+    const action = pick(ACTIONS, 100 + i * 6);
+    const state = pick(STATES, 100 + i * 6 + 1);
+    const metric = pick(METRICS, 100 + i * 6 + 2);
+    const condition = pick(CONDITIONS, 100 + i * 6 + 3);
+    const connector = pick(COMPUTE_CONNECTORS, 100 + i * 6 + 4);
+    const ending = pick(COMPUTE_ENDINGS, 100 + i * 6 + 5);
+    computeSteps.push(`${condition}で${action}${connector}、${state}まで${metric}で${ending}`);
   }
 
-  const verifySteps: string[] = [];
   const numVerify = Math.min(Math.floor(ingredients.length / 2) + 1, 3);
-  for (let i = 0; i < numVerify; i++) {
-    verifySteps.push(pick(VERIFICATIONS, 200 + i));
-  }
+  const verifySteps = pickUnique(VERIFICATIONS, numVerify, 200);
 
   const finalSteps: string[] = [];
   finalSteps.push(pick(FINALIZATIONS, 300));
