@@ -1,5 +1,6 @@
 import { INGREDIENT_ALIASES } from '../data/ingredients';
 import {
+  INIT_VERBS,
   RECIPE_PREFIXES,
   RECIPE_SUFFIXES,
   COMPUTE_ENDINGS,
@@ -40,10 +41,11 @@ export function generateRecipe(ingredients: string[]): Recipe | null {
 
   const initSteps: string[] = [];
   ingredients.forEach((ing, i) => {
-    const action = pick(ACTIONS, i * 3);
-    const method = pick(METHODS, i * 3 + 1);
-    const tool = pick(TOOLS, i * 3 + 2);
-    initSteps.push(`${ing}を${tool}に読み込み、${method}により${action}する。`);
+    const action = pick(ACTIONS, i * 4);
+    const method = pick(METHODS, i * 4 + 1);
+    const tool = pick(TOOLS, i * 4 + 2);
+    const verb = pick(INIT_VERBS, i * 4 + 3);
+    initSteps.push(`${ing}を${tool}に${verb}し、${method}により${action}する。`);
   });
 
   const computeSteps: string[] = [];
