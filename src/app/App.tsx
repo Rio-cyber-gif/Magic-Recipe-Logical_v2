@@ -25,11 +25,19 @@ export default function App() {
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
+    let rafId: number | null = null;
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300);
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        setShowScrollTop(window.scrollY > 300);
+        rafId = null;
+      });
     };
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   const scrollToTop = () => {
@@ -138,7 +146,7 @@ export default function App() {
               <button
                 onClick={handleCast}
                 disabled={selectedIngredients.length === 0}
-                className="w-full px-6 py-5 bg-primary text-primary-foreground rounded-xl text-lg font-semibold tracking-widest uppercase shadow-lg hover:opacity-90 hover:shadow-primary/40 transition-all disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
+                className="w-full px-6 py-5 bg-primary text-primary-foreground rounded-xl text-lg font-semibold tracking-widest uppercase shadow-lg hover:opacity-90 hover:shadow-primary/40 transition-[opacity,box-shadow] disabled:opacity-40 disabled:cursor-not-allowed disabled:shadow-none"
               >
                 ✦ Cast ✦
               </button>
@@ -249,7 +257,7 @@ export default function App() {
       {showScrollTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 p-4 rounded-full bg-primary text-primary-foreground shadow-lg hover:opacity-90 transition-all z-50 cursor-pointer border border-white/20"
+          className="fixed bottom-6 right-6 p-4 rounded-full bg-primary text-primary-foreground shadow-lg hover:opacity-90 transition-opacity z-50 cursor-pointer border border-white/20"
           aria-label="ページトップへ戻る"
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
