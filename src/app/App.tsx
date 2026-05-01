@@ -53,7 +53,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
-      <div ref={cardRef} className="w-full max-w-2xl bg-white/20 backdrop-blur-2xl border border-white/30 border-l-4 border-l-white/80 rounded-3xl p-8 shadow-2xl">
+      <div ref={cardRef} className="w-full max-w-2xl bg-white/30 border border-white/30 border-l-4 border-l-white/80 rounded-3xl p-8 shadow-2xl">
         {!showRecipe ? (
           <div className="space-y-8">
             <header className="text-center">
