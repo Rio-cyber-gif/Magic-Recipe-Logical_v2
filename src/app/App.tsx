@@ -117,7 +117,7 @@ export default function App() {
                           onClick={() => toggleIngredient(ingredient)}
                           disabled={isDisabled}
                           className={`
-                            px-3 py-2 text-sm rounded-md border transition-colors
+                            px-2 py-2 text-sm rounded-md border transition-colors
                             ${isSelected
                               ? 'bg-primary text-primary-foreground border-primary'
                               : 'bg-white/60 text-foreground border-white/40 hover:bg-white/80'
