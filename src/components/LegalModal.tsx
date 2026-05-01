@@ -10,11 +10,11 @@ export function LegalModal({ type, onClose }: LegalModalProps) {
       onClick={onClose}
     >
       {/* オーバーレイ */}
-      <div className="absolute inset-0 bg-pink-950/20 backdrop-blur-sm" />
+      <div className="absolute inset-0 bg-pink-950/30" />
 
       {/* モーダル本体 */}
       <div
-        className="relative w-full max-w-lg bg-white/60 backdrop-blur-xl border border-white/30 border-l-4 border-l-white/80 rounded-3xl p-8 shadow-2xl max-h-[80vh] overflow-y-auto"
+        className="relative w-full max-w-lg bg-white/80 border border-white/30 border-l-4 border-l-white/80 rounded-3xl p-8 shadow-2xl max-h-[80vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         <button
