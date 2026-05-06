@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { INGREDIENT_CATEGORIES } from '../data/ingredients';
 import { useRecipe } from '../hooks/useRecipe';
 import { LegalModal } from '../components/LegalModal';
+import { LoadingScreen } from '../components/LoadingScreen';
 
 type ModalType = 'terms' | 'privacy' | null;
 
@@ -10,6 +11,7 @@ export default function App() {
     selectedIngredients,
     recipe,
     showRecipe,
+    isLoading,
     activeCategory,
     filteredIngredients,
     setActiveCategory,
@@ -23,6 +25,7 @@ export default function App() {
   const cardRef = useRef<HTMLDivElement>(null);
   const [openModal, setOpenModal] = useState<ModalType>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [recipeVisible, setRecipeVisible] = useState(false);
 
   useEffect(() => {
     let rafId: number | null = null;
@@ -44,17 +47,30 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Cast 後にカード先頭へスクロール
+  // Cast 後にカード先頭へスクロール＆フェードイン
   useEffect(() => {
     if (showRecipe) {
       cardRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      let id1: number;
+      let id2: number;
+      id1 = requestAnimationFrame(() => {
+        id2 = requestAnimationFrame(() => setRecipeVisible(true));
+      });
+      return () => {
+        cancelAnimationFrame(id1);
+        cancelAnimationFrame(id2);
+      };
+    } else {
+      setRecipeVisible(false);
     }
   }, [showRecipe]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
       <div ref={cardRef} className="w-full max-w-2xl bg-white/30 border border-white/30 border-l-4 border-l-white/80 rounded-3xl p-8 shadow-2xl">
-        {!showRecipe ? (
+        {isLoading ? (
+          <LoadingScreen />
+        ) : !showRecipe ? (
           <div className="space-y-8">
             <header className="text-center">
               <img src="/mrl.png" alt="Magic Recipe Logical" className="w-full h-auto object-contain header-image" />
@@ -175,7 +191,14 @@ export default function App() {
             </footer>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div
+            className="space-y-8"
+            style={{
+              opacity: recipeVisible ? 1 : 0,
+              transform: recipeVisible ? 'translateY(0)' : 'translateY(12px)',
+              transition: 'opacity 0.8s ease, transform 0.8s ease',
+            }}
+          >
             <header className="text-center space-y-4 pb-8 border-b border-border">
               <div className="space-y-2">
                 <p className="text-sm text-muted-foreground tracking-wider uppercase">

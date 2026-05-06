@@ -6,6 +6,7 @@ export function useRecipe() {
   const [selectedIngredients, setSelectedIngredients] = useState<string[]>([]);
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [showRecipe, setShowRecipe] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>('すべて');
 
   const filteredIngredients = activeCategory === 'すべて'
@@ -28,7 +29,11 @@ export function useRecipe() {
     if (selectedIngredients.length === 0) return;
     const generated = generateRecipe(selectedIngredients);
     setRecipe(generated);
-    setShowRecipe(true);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      setShowRecipe(true);
+    }, 7500);
   };
 
   const handleShare = (recipeName: string) => {
@@ -49,6 +54,7 @@ export function useRecipe() {
     selectedIngredients,
     recipe,
     showRecipe,
+    isLoading,
     activeCategory,
     filteredIngredients,
     setActiveCategory,
