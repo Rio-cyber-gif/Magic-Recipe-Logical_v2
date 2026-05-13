@@ -1,0 +1,17 @@
+{
+  "name": "Magic Recipe Logical",
+  "short_name": "MRL",
+  "description": "食材を選んで、エンジニアリングのメタファーで構成された論理的なレシピを錬成しよう。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#9333ea",
+  "theme_color": "#9333ea",
+  "icons": [
+    {
+      "src": "/fb.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
