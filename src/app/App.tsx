@@ -204,7 +204,7 @@ export default function App() {
                 <p className="text-sm text-muted-foreground tracking-wider uppercase">
                   Build Successful
                 </p>
-                <h1 className="text-foreground text-xl leading-snug px-4 break-keep">
+                <h1 className="text-foreground text-lg sm:text-xl leading-snug px-4 break-words">
                   {recipe?.name}
                 </h1>
               </div>
